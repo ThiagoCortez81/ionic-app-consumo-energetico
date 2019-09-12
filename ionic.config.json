@@ -1,0 +1,7 @@
+{
+  "name": "front-app-consumo-energetico",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
