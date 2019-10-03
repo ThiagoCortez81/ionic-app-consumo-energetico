@@ -1,0 +1,46 @@
+<ion-header class="custom-navbar">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Registre-se
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="ion-color-dark login-container" color="#3880ff">
+    <main class="margin-center">
+        <form (ngSubmit)="doRegistration($event)">
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">Nome</ion-label>
+                <ion-input [(ngModel)]="user.nome" name="nome"></ion-input>
+            </ion-item>
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">Sobrenome</ion-label>
+                <ion-input [(ngModel)]="user.sobrenome" name="sobrenome"></ion-input>
+            </ion-item>
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">Data de nascimento</ion-label>
+                <ion-input type="date" [(ngModel)]="user.dataNascimento" name="dataNascimento"></ion-input>
+            </ion-item>
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">E-mail</ion-label>
+                <ion-input type="email" [(ngModel)]="user.email" name="email"></ion-input>
+            </ion-item>
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">Senha</ion-label>
+                <ion-input type="password" [(ngModel)]="user.senha" name="senha"></ion-input>
+            </ion-item>
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">Confirme a senha</ion-label>
+                <ion-input type="password" [(ngModel)]="user.confirmarSenha" name="confirmarSenha"></ion-input>
+            </ion-item>
+
+            <ion-button type="submit" expand="block">
+                <span *ngIf="!loading">Registrar</span>
+                <ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+            </ion-button>
+        </form>
+    </main>
+</ion-content>

@@ -1,0 +1,14 @@
+ion-tab-bar {
+  font-weight: lighter;
+  background-color: rgb(34, 36, 40);
+
+  ion-tab-button {
+    background-color: rgb(34, 36, 40);
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.tab-selected{
+  font-weight: bold;
+  color: rgb(255, 255, 255)!important;
+}

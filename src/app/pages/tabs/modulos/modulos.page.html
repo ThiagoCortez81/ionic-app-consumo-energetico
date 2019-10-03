@@ -1,0 +1,48 @@
+<ion-header class="custom-navbar">
+    <ion-toolbar color="dark">
+        <ion-title>
+            {{appName}}
+            <a class="logout-button" [routerLink]="['/']">
+                <ion-icon name="exit"></ion-icon>
+            </a>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-color-dark" color="#FFF">
+    <ion-card class="ion-color-light login-container" color="#FFF" *ngFor="let sensor of listSensores">
+        <ion-card-header>
+            <ion-card-title>
+                <b>{{sensor.apelido || "Módulo " + sensor._id.substr(0, 7)}}</b>
+            </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <ion-list lines="none">
+                <ion-item class="activated">
+                    <ion-icon name="star" slot="start"></ion-icon>
+                    <ion-label>{{sensor._id}}</ion-label>
+                </ion-item>
+                <ion-item class="activated">
+                    <ion-icon name="wifi" slot="start"></ion-icon>
+                    <ion-label>{{sensor.macSensor}}</ion-label>
+                </ion-item>
+                <ion-item class="activated">
+                    <ion-icon name="time" slot="start"></ion-icon>
+                    <ion-label>{{sensor.ultimaComunicacao || 'Sem dados'}}</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+
+        <ion-row padding float-right>
+            <ion-button type="submit" expand="block" color="success" (click)="abrirAlertEditApelido(sensor)">
+                <ion-icon name="create" slot="start"></ion-icon>
+                <span>Editar apelido</span>
+            </ion-button>
+            <ion-button type="submit" expand="block">
+                <ion-icon name="eye" slot="start"></ion-icon>
+                <span>Detalhar</span>
+            </ion-button>
+        </ion-row>
+    </ion-card>
+</ion-content>

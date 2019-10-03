@@ -1,0 +1,24 @@
+<ion-content padding class="ion-color-dark login-container" color="#3880ff">
+    <main class="margin-center">
+        <form (ngSubmit)="fazerLogin($event)">
+            <div text-center>
+                <img src="/assets/raio.png" alt=""/>
+            </div>
+
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">E-mail</ion-label>
+                <ion-input [(ngModel)]="userData.email" name="email"></ion-input>
+            </ion-item>
+            <ion-item color="ion-color-dark">
+                <ion-label position="floating">Senha</ion-label>
+                <ion-input [(ngModel)]="userData.senha" name="senha" type="password"></ion-input>
+            </ion-item>
+
+            <ion-button type="submit" expand="block">
+                <span *ngIf="!loading">Login</span>
+                <ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+            </ion-button>
+        </form>
+        <p text-center>Ainda não tem uma conta? <br> Cadastre-se <a [routerLink]="['/register']">aqui</a></p>
+    </main>
+</ion-content>
