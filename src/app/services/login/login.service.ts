@@ -13,7 +13,6 @@ export class LoginService {
     public async fazerLogin(userObj) {
         if (userObj.email != "" && userObj.senha != "") {
             const user: any = await this._ws.login(userObj).toPromise();
-            console.log('user', user);
 
             if (user.success) {
                 // Salvando dados

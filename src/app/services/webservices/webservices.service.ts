@@ -7,7 +7,7 @@ import {StorageService} from "../storage/storage.service";
 })
 export class WebservicesService {
     // _URL_WEBSERVICES = "http://cortezit.me/api/";
-    _URL_WEBSERVICES = "http://192.168.43.43:3000/api/";
+    _URL_WEBSERVICES = "http://192.168.100.105:3000/api/";
 
     constructor(private _http: HttpClient, private _storage: StorageService) {
     }
@@ -31,6 +31,12 @@ export class WebservicesService {
         const headers = await this.mountAuthenticationHeader();
 
         return this.doPost(this.urlBuilder('alterarSensorApelido'), payload, headers);
+    }
+
+    async listarConsumoSensor(payload) {
+        const headers = await this.mountAuthenticationHeader();
+
+        return this.doPost(this.urlBuilder('listarConsumoSensor'), payload, headers);
     }
 
     private async mountAuthenticationHeader() {

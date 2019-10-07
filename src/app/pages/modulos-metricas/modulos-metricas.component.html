@@ -1,0 +1,26 @@
+<ion-header class="custom-navbar">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Modulo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-color-dark login-container" color="#3880ff">
+    <div padding>
+        <h5 class="margin-0">Ver consumo de...</h5>
+
+        <ion-button [color]="diasParaBuscar == 7 ? 'light' : 'dark'" (click)="selecionaBuscaDados(7)" class="selected">7 dias</ion-button>
+        <ion-button [color]="diasParaBuscar == 30 ? 'light' : 'dark'" (click)="selecionaBuscaDados(30)" class="selected">30 dias</ion-button>
+        <ion-button [color]="diasParaBuscar == 60 ? 'light' : 'dark'" (click)="selecionaBuscaDados(60)" class="selected">60 dias</ion-button>
+    </div>
+    <fusioncharts
+            width="100%"
+            height="400"
+            type="line"
+            [dataSource]="chartData" >
+    </fusioncharts>
+</ion-content>

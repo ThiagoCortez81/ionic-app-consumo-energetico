@@ -15,11 +15,24 @@ import {LoginService} from "./services/login/login.service";
 import {HttpClientModule} from "@angular/common/http";
 import { IonicStorageModule } from '@ionic/storage'
 import {StorageService} from "./services/storage/storage.service";
+import {ModulosMetricasComponent} from "./pages/modulos-metricas/modulos-metricas.component";
+
+// Import angular-fusioncharts
+import { FusionChartsModule } from "angular-fusioncharts";
+
+// Import FusionCharts library and chart modules
+import * as FusionCharts from "fusioncharts";
+import * as Charts from "fusioncharts/fusioncharts.charts";
+
+import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.candy";
+
+// Pass the fusioncharts library and chart modules
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, RegisterComponent],
+    declarations: [AppComponent, LoginComponent, RegisterComponent, ModulosMetricasComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicStorageModule.forRoot(), IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
+    imports: [BrowserModule, IonicStorageModule.forRoot(), IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule, FusionChartsModule],
     providers: [
         StatusBar,
         SplashScreen,

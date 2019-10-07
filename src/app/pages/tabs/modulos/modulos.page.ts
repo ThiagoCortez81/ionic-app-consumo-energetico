@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AppComponent} from "../../../app.component";
 import {WebservicesService} from "../../../services/webservices/webservices.service";
 import {AlertService} from "../../../services/alert/alert.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'tab-modulos',
@@ -14,7 +15,7 @@ export class ModulosPage implements OnInit {
     selectedSensor: any;
     listSensores: any;
 
-    constructor(private _ws: WebservicesService, private _alertService: AlertService) {
+    constructor(private _ws: WebservicesService, private _alertService: AlertService, private _nav: Router) {
     }
 
     async ngOnInit(): Promise<any> {
@@ -74,5 +75,9 @@ export class ModulosPage implements OnInit {
                 this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
             }
         });
+    }
+
+    detalharSensor(sensor: any) {
+        this._nav.navigate(["/modulo/", sensor.macSensor]);
     }
 }

@@ -35,11 +35,11 @@
         </ion-card-content>
 
         <ion-row padding float-right>
-            <ion-button type="submit" expand="block" color="success" (click)="abrirAlertEditApelido(sensor)">
+            <ion-button expand="block" color="success" (click)="abrirAlertEditApelido(sensor)">
                 <ion-icon name="create" slot="start"></ion-icon>
                 <span>Editar apelido</span>
             </ion-button>
-            <ion-button type="submit" expand="block">
+            <ion-button expand="block" (click)="detalharSensor(sensor)">
                 <ion-icon name="eye" slot="start"></ion-icon>
                 <span>Detalhar</span>
             </ion-button>

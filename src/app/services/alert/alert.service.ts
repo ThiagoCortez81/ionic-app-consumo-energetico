@@ -38,7 +38,10 @@ export class AlertService {
         toast.present();
     }
 
-    async defaultLoading(message: string) {
+    async defaultLoading(message?: string|null|undefined) {
+        if (message == null || message == undefined)
+            message = "Carregando...";
+
         const loading = await this._loadingController.create({
             message: message
         });
