@@ -49,4 +49,12 @@ export class AlertService {
 
         return loading;
     }
+
+    converteData(data: string) {
+        const date = data.substr(0, 10);
+        const hour = data.substr(10, 10);
+        const dia = date.split("-");
+
+        return `${dia[2]}/${dia[1]}/${dia[0]} ${hour}`;
+    }
 }

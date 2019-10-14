@@ -29,15 +29,23 @@
                 </ion-item>
                 <ion-item class="activated">
                     <ion-icon name="time" slot="start"></ion-icon>
-                    <ion-label>{{sensor.ultimaComunicacao || 'Sem dados'}}</ion-label>
+                    <ion-label>{{converteData(sensor.ultimaComunicacao) || 'Sem dados'}}</ion-label>
+                </ion-item>
+                <ion-item class="activated">
+                    <ion-icon name="alert" slot="start"></ion-icon>
+                    <ion-label>{{sensor.limiteAlerta || 'Sem dados de '}} Kw/h</ion-label>
                 </ion-item>
             </ion-list>
         </ion-card-content>
 
         <ion-row padding float-right>
+            <ion-button expand="block" color="warning" (click)="abrirAlertEditLimite(sensor)">
+                <ion-icon name="create" slot="start"></ion-icon>
+                <span>Limite</span>
+            </ion-button>
             <ion-button expand="block" color="success" (click)="abrirAlertEditApelido(sensor)">
                 <ion-icon name="create" slot="start"></ion-icon>
-                <span>Editar apelido</span>
+                <span>Apelido</span>
             </ion-button>
             <ion-button expand="block" (click)="detalharSensor(sensor)">
                 <ion-icon name="eye" slot="start"></ion-icon>

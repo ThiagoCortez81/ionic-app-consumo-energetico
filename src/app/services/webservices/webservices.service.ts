@@ -6,8 +6,9 @@ import {StorageService} from "../storage/storage.service";
     providedIn: 'root'
 })
 export class WebservicesService {
-    // _URL_WEBSERVICES = "http://cortezit.me/api/";
-    _URL_WEBSERVICES = "http://192.168.100.105:3000/api/";
+    _URL_WEBSERVICES = "http://cortezit.me/api/";
+    // _URL_WEBSERVICES = "http://200.235.90.116:3000/api/";
+    // _URL_WEBSERVICES = "http://localhost:3000/api/";
 
     constructor(private _http: HttpClient, private _storage: StorageService) {
     }
@@ -33,13 +34,29 @@ export class WebservicesService {
         return this.doPost(this.urlBuilder('alterarSensorApelido'), payload, headers);
     }
 
+    async alterarSensorLimite(payload) {
+        const headers = await this.mountAuthenticationHeader();
+
+        return this.doPost(this.urlBuilder('alterarSensorLimite'), payload, headers);
+    }
+
     async listarConsumoSensor(payload) {
         const headers = await this.mountAuthenticationHeader();
 
         return this.doPost(this.urlBuilder('listarConsumoSensor'), payload, headers);
     }
 
-    private async mountAuthenticationHeader() {
+    async storeToken(payload) {
+        const headers = await this.mountAuthenticationHeader();
+
+        console.log("this.urlBuilder('storeToken')", this.urlBuilder('storeToken'));
+        console.log("storeToken", payload);
+        console.log("headers", headers);
+
+        return this.doPost(this.urlBuilder('storeToken'), payload, headers);
+    }
+
+    public async mountAuthenticationHeader() {
         return {
             'x-access-token': await this._storage.getJWT()
         };

@@ -20,6 +20,10 @@ const routes: Routes = [
     {
         path: 'modulo/:modulo',
         component: ModulosMetricasComponent
+    },
+    {
+        path: 'modulo/:modulo/:apelido',
+        component: ModulosMetricasComponent
     }
 ];
 

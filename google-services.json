@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "798568064534",
+    "firebase_url": "https://consumo-energ-169a4.firebaseio.com",
+    "project_id": "consumo-energ-169a4",
+    "storage_bucket": "consumo-energ-169a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798568064534:android:7437c6c35bfeb806c43737",
+        "android_client_info": {
+          "package_name": "me.cortezit.energia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798568064534-suo8r11mbb12s1mahevoqr3vgckaaio1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3VMuM7UgeJbLj8pDGqPOa0miT0jGShcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798568064534-suo8r11mbb12s1mahevoqr3vgckaaio1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
