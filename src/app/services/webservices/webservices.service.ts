@@ -7,7 +7,7 @@ import {StorageService} from "../storage/storage.service";
 })
 export class WebservicesService {
     _URL_WEBSERVICES = "http://cortezit.me/api/";
-    // _URL_WEBSERVICES = "http://200.235.90.116:3000/api/";
+    // _URL_WEBSERVICES = "http://200.235.91.225:3000/api/";
     // _URL_WEBSERVICES = "http://localhost:3000/api/";
 
     constructor(private _http: HttpClient, private _storage: StorageService) {

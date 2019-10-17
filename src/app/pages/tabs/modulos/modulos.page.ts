@@ -21,12 +21,20 @@ export class ModulosPage implements OnInit {
 
     constructor(private _ws: WebservicesService, private _alertService: AlertService, private _nav: Router, private _fcm: FcmService,
                 _toastCtrl: ToastController, private _platform: Platform, private _localNotifications: LocalNotifications) {
+    }
+
+    async ngOnInit(): Promise<any> {
+        await this.initializePage();
+    }
+
+    async initializePage() {
+        // Registrando o serviço do firebase
         this._platform.ready().then(() => {
             // Get an FCM token
-            _fcm.getToken();
+            this._fcm.getToken();
 
             // Listen to incoming messages
-            _fcm.listenToNotifications().pipe(
+            this._fcm.listenToNotifications().pipe(
                 tap(msg => {
                     _localNotifications.schedule({
                         id: 1,
@@ -36,16 +44,16 @@ export class ModulosPage implements OnInit {
                 })
             ).subscribe();
         });
-    }
 
-    async ngOnInit(): Promise<any> {
         const loading = await this._alertService.defaultLoading("Carregando...");
 
         this._ws.listarSensoresCliente().then(resp => resp.toPromise()).then((resposta: any) => {
-            if (resposta.isAuthenticated)
+            if (resposta.isAuthenticated) {
                 this.listSensores = resposta.sensores;
-            else
-                alert("Deslogado");
+            } else {
+                this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                this._nav.navigate(['/']);
+            }
 
             loading.dismiss();
         });
@@ -119,6 +127,7 @@ export class ModulosPage implements OnInit {
                 this._alertService.defaultAlert(header, null, message, [button]);
             } else {
                 this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                this._nav.navigate(['/']);
             }
         });
     }
@@ -139,6 +148,7 @@ export class ModulosPage implements OnInit {
                 this._alertService.defaultAlert(header, null, message, [button]);
             } else {
                 this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                this._nav.navigate(['/']);
             }
         });
     }

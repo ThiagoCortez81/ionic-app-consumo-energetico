@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login/login.service";
 import {AlertService} from "../../services/alert/alert.service";
 import {Router} from "@angular/router";
+import {StorageService} from "../../services/storage/storage.service";
 
 @Component({
     selector: 'app-login',
@@ -16,10 +17,15 @@ export class LoginComponent implements OnInit {
         senha: ''
     };
 
-    constructor(private _loginService: LoginService, private _alertService: AlertService, private router: Router) {
+    constructor(private _loginService: LoginService, private _alertService: AlertService, private router: Router, private _storageService: StorageService) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+        // Verifico se ja estou logado
+        const tokenJWT = await this._storageService.getJWT();
+        if (tokenJWT != null && tokenJWT != undefined && tokenJWT != "") {
+            this.router.navigate(['/main']);
+        }
     }
 
     fazerLogin(event) {
