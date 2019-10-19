@@ -20,6 +20,14 @@ export class StorageService {
     return this.set('jwt', jwtToken);
   }
 
+  public async getValorKW() {
+    return parseFloat(await this.get('valorKW'));
+  }
+
+  public async saveValorKW(valorKW: string) {
+    return this.set('valorKW', valorKW);
+  }
+
   private get(key: string) {
     return this.storage.get(key);
   }

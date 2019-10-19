@@ -6,7 +6,8 @@ import {Router} from "@angular/router";
 import {tap} from "rxjs/operators";
 import {FcmService} from "../../../services/fcm/fcm.service";
 import {Platform, ToastController} from "@ionic/angular";
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import {LocalNotifications} from '@ionic-native/local-notifications/ngx';
+import {StorageService} from "../../../services/storage/storage.service";
 
 @Component({
     selector: 'tab-modulos',
@@ -18,9 +19,10 @@ export class ModulosPage implements OnInit {
     appName = AppComponent.appName;
     selectedSensor: any;
     listSensores: any;
+    consumo: any;
 
     constructor(private _ws: WebservicesService, private _alertService: AlertService, private _nav: Router, private _fcm: FcmService,
-                _toastCtrl: ToastController, private _platform: Platform, private _localNotifications: LocalNotifications) {
+                _toastCtrl: ToastController, private _platform: Platform, private _localNotifications: LocalNotifications, private _storageService: StorageService) {
     }
 
     async ngOnInit(): Promise<any> {
@@ -28,6 +30,8 @@ export class ModulosPage implements OnInit {
     }
 
     async initializePage() {
+        this.consumo = await this._storageService.getValorKW();
+
         // Registrando o serviço do firebase
         this._platform.ready().then(() => {
             // Get an FCM token
@@ -36,7 +40,7 @@ export class ModulosPage implements OnInit {
             // Listen to incoming messages
             this._fcm.listenToNotifications().pipe(
                 tap(msg => {
-                    _localNotifications.schedule({
+                    this._localNotifications.schedule({
                         id: 1,
                         title: msg.title,
                         text: msg.body
@@ -51,8 +55,10 @@ export class ModulosPage implements OnInit {
             if (resposta.isAuthenticated) {
                 this.listSensores = resposta.sensores;
             } else {
-                this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
-                this._nav.navigate(['/']);
+                this._storageService.saveJWT(undefined).then((res) => {
+                    this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                    this._nav.navigate(['/']);
+                });
             }
 
             loading.dismiss();
@@ -126,8 +132,10 @@ export class ModulosPage implements OnInit {
 
                 this._alertService.defaultAlert(header, null, message, [button]);
             } else {
-                this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
-                this._nav.navigate(['/']);
+                this._storageService.saveJWT(undefined).then((res) => {
+                    this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                    this._nav.navigate(['/']);
+                });
             }
         });
     }
@@ -147,8 +155,10 @@ export class ModulosPage implements OnInit {
 
                 this._alertService.defaultAlert(header, null, message, [button]);
             } else {
-                this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
-                this._nav.navigate(['/']);
+                this._storageService.saveJWT(undefined).then((res) => {
+                    this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                    this._nav.navigate(['/']);
+                });
             }
         });
     }
@@ -159,5 +169,14 @@ export class ModulosPage implements OnInit {
 
     converteData(data: string) {
         return this._alertService.converteData(data);
+    }
+
+    calculaConsumo(qtdKw) {
+        return 'R$ ' + (this.consumo * qtdKw).toFixed(2).toString().replace('.', ',');
+    }
+
+    async logout() {
+        await this._storageService.saveJWT(null);
+        this._nav.navigate(['/']);
     }
 }

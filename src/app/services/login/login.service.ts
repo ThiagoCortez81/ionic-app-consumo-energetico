@@ -16,6 +16,7 @@ export class LoginService {
 
             if (user.success) {
                 // Salvando dados
+                this._storageService.saveValorKW(user.valorKW);
                 this._storageService.saveJWT(user.token);
                 this._storageService.saveUser(JSON.stringify(user.usuario));
 

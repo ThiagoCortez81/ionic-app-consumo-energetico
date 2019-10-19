@@ -6,8 +6,8 @@ import {StorageService} from "../storage/storage.service";
     providedIn: 'root'
 })
 export class WebservicesService {
-    _URL_WEBSERVICES = "http://cortezit.me/api/";
-    // _URL_WEBSERVICES = "http://200.235.91.225:3000/api/";
+    // _URL_WEBSERVICES = "http://cortezit.me/api/";
+    _URL_WEBSERVICES = "http://200.235.94.40:3000/api/";
     // _URL_WEBSERVICES = "http://localhost:3000/api/";
 
     constructor(private _http: HttpClient, private _storage: StorageService) {
@@ -48,10 +48,6 @@ export class WebservicesService {
 
     async storeToken(payload) {
         const headers = await this.mountAuthenticationHeader();
-
-        console.log("this.urlBuilder('storeToken')", this.urlBuilder('storeToken'));
-        console.log("storeToken", payload);
-        console.log("headers", headers);
 
         return this.doPost(this.urlBuilder('storeToken'), payload, headers);
     }
