@@ -94,7 +94,7 @@ export class ModulosPage implements OnInit {
     abrirAlertEditLimite(sensor) {
         this.selectedSensor = sensor;
 
-        const title = 'Editar limite para alerta do módulo (em Kw/h)';
+        const title = 'Editar limite para alerta do módulo (em R$)';
         const inputs = [{
             name: 'limiteAlerta',
             type: 'number',
@@ -149,7 +149,7 @@ export class ModulosPage implements OnInit {
                 let button = "Tentar novamente";
                 if (response.success) {
                     header = "Sucesso!";
-                    message = `Limite de '${limite}' Kw/h salvo com sucesso!`;
+                    message = `Limite de '${this.paraReais(limite)}' salvo com sucesso!`;
                     button = "Ok";
                 }
 
@@ -172,7 +172,11 @@ export class ModulosPage implements OnInit {
     }
 
     calculaConsumo(qtdKw) {
-        return 'R$ ' + (this.consumo * qtdKw).toFixed(2).toString().replace('.', ',');
+        return this.consumo * qtdKw;
+    }
+
+    paraReais(valor) {
+        return `R$ ${parseFloat(valor).toFixed(2).toString().replace('.', ',')}`
     }
 
     async logout() {

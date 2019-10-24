@@ -32,18 +32,18 @@
                     <ion-label>{{converteData(sensor.ultimaComunicacao) || 'Sem dados'}}</ion-label>
                 </ion-item>
                 <ion-item class="activated">
-                    <ion-icon name="alert" slot="start"></ion-icon>
+                    <ion-icon [color]="sensor.limiteAlerta != null && sensor.limiteAlerta < calculaConsumo(sensor.consumo) ? 'danger' : 'success'" name="cash" slot="start"></ion-icon>
                     <ion-label>
-                        {{sensor.limiteAlerta || 'Sem dados de '}} Kw/h
-                        <ion-badge color="danger" *ngIf="sensor.limiteAlerta != null && sensor.limiteAlerta < sensor.consumo">
-                            Consumo atual {{sensor.consumo.toFixed(2)}}kw/h.
-                        </ion-badge>
+                        {{paraReais(calculaConsumo(sensor.consumo))}}
                     </ion-label>
                 </ion-item>
                 <ion-item class="activated">
-                    <ion-icon [color]="sensor.limiteAlerta != null && sensor.limiteAlerta < sensor.consumo ? 'danger' : 'success'" name="cash" slot="start"></ion-icon>
+                    <ion-icon name="alert" slot="start"></ion-icon>
                     <ion-label>
-                        {{calculaConsumo(sensor.consumo)}}
+                        {{paraReais(sensor.limiteAlerta)}}
+                        <ion-badge color="danger" *ngIf="sensor.limiteAlerta != null && sensor.limiteAlerta < calculaConsumo(sensor.consumo)">
+                            Consumo atual {{paraReais(calculaConsumo(sensor.consumo))}}.
+                        </ion-badge>
                     </ion-label>
                 </ion-item>
             </ion-list>
