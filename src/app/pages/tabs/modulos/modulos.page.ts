@@ -117,6 +117,32 @@ export class ModulosPage implements OnInit {
         this._alertService.promptAlert(title, inputs, buttons);
     }
 
+    abrirAlertEditLimitePico(sensor) {
+        this.selectedSensor = sensor;
+
+        const title = 'Editar limite para o modulo desligar (pico Kw/h)';
+        const inputs = [{
+            name: 'kwAlerta',
+            type: 'number',
+            placeholder: 'Limite',
+            value: this.selectedSensor.kwAlerta
+        }];
+        const buttons = [{
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+                console.log('Confirm Cancel');
+            }
+        }, {
+            text: 'Alterar',
+            handler: (content) => {
+                this.salvarNovoLimitePico(content.kwAlerta);
+            }
+        }];
+        this._alertService.promptAlert(title, inputs, buttons);
+    }
+
     salvarNovoApelido(apelido: string) {
         this.selectedSensor.apelido = apelido;
         this._ws.alterarSensorApelido({sensor: this.selectedSensor}).then(res => res.toPromise()).then((response: any) => {
@@ -150,6 +176,29 @@ export class ModulosPage implements OnInit {
                 if (response.success) {
                     header = "Sucesso!";
                     message = `Limite de '${this.paraReais(limite)}' salvo com sucesso!`;
+                    button = "Ok";
+                }
+
+                this._alertService.defaultAlert(header, null, message, [button]);
+            } else {
+                this._storageService.saveJWT(undefined).then((res) => {
+                    this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                    this._nav.navigate(['/']);
+                });
+            }
+        });
+    }
+
+    salvarNovoLimitePico(limite: string) {
+        this.selectedSensor.kwAlerta = limite;
+        this._ws.alterarSensorLimitePico({sensor: this.selectedSensor}).then(res => res.toPromise()).then((response: any) => {
+            if (response.isAuthenticated) {
+                let header = "Oops!";
+                let message = "Ops, ocorreu um problema ao salvar os dados. Tente novamente mais tarde!";
+                let button = "Tentar novamente";
+                if (response.success) {
+                    header = "Sucesso!";
+                    message = `Limite de '${limite}' salvo com sucesso!`;
                     button = "Ok";
                 }
 
