@@ -221,6 +221,8 @@ export class ModulosPage implements OnInit {
     }
 
     calculaConsumo(qtdKw) {
+        console.log('qtdKw', qtdKw);
+        console.log('this.consumo', this.consumo);
         return this.consumo * qtdKw;
     }
 
