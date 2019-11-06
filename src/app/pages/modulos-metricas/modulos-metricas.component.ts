@@ -27,7 +27,7 @@ export class ModulosMetricasComponent implements OnInit {
 
     ngOnInit() {
         this.consumoTotal = "0";
-        this.diasParaBuscar = 7;
+        this.diasParaBuscar = 0;
         this.macSensor = this._route.snapshot.paramMap.get("modulo");
         this.apelido = this._route.snapshot.paramMap.get("apelido");
         this.initializeChart();
@@ -37,9 +37,13 @@ export class ModulosMetricasComponent implements OnInit {
 
     initializeChart() {
         // Chart Configuration
+        let tempo = this.diasParaBuscar + ' dias';
+        if (this.diasParaBuscar <= 0) {
+            tempo = '5 minutos';
+        }
         this.chartData = {
             chart: {
-                caption: `Consumo dos últimos ${this.diasParaBuscar} dias`,
+                caption: `Consumo dos últimos ${tempo}`,
                 numberSuffix: "KW",
                 theme: "candy",
                 bgColor: "#222428",
@@ -76,15 +80,24 @@ export class ModulosMetricasComponent implements OnInit {
     }
 
     retornaBuscarObj() {
-        const now = moment();
-        const dataMax = `${now.toISOString().substring(0, 10)} 23:59:59`;
+        let now = moment();
+        let dataMax, dataMin;
+        if (this.diasParaBuscar == 0) {
+            now = now.subtract(3, 'hours');
+            dataMax = `${now.toISOString().replace('T', ' ').substr(0, 19)}`;
+            now = now.subtract(5, 'minutes');
+            dataMin = `${now.toISOString().replace('T', ' ').substr(0, 19)}`;
+        } else {
+            dataMax = `${now.toISOString().substring(0, 10)} 23:59:59`;
 
-        const dataAntes = now.subtract(this.diasParaBuscar, 'days');
-        const dataMin = `${dataAntes.toISOString().substring(0, 10)} 00:00:00`;
+            const dataAntes = now.subtract(this.diasParaBuscar, 'days');
+            dataMin = `${dataAntes.toISOString().substring(0, 10)} 00:00:00`;
+        }
 
         const buscaObj = {
             dataMin: dataMin,
             dataMax: dataMax,
+            diasParaBuscar: this.diasParaBuscar,
             macSensor: this.macSensor
         };
 
@@ -98,16 +111,29 @@ export class ModulosMetricasComponent implements OnInit {
             this.chartData.data = [];
             const keys = Object.keys(resposta.dadosMedicoes);
             keys.map((row: any) => {
-                const dia = row.split("-");
+                let label = '';
+                if (row.length > 10) {
+                    const dia = row.split(" ");
+                    label = dia[1]
+                } else {
+                    const dia = row.split("-");
+                    label = `${dia[2]}/${dia[1]}/${dia[0]}`;
+                }
                 const data = {
-                    "label": `${dia[2]}/${dia[1]}/${dia[0]}`,
+                    "label": label,
                     "value": resposta.dadosMedicoes[row]
                 };
 
                 this.chartData.data.push(data);
             });
-            // TODO: Implementar polling, consumo total e notificações...
-            this.chartData.chart.caption = `Consumo dos últimos ${this.diasParaBuscar} dias`;
+
+            this.chartData.chart.drawAnchors = 1;
+            let tempo = this.diasParaBuscar + ' dias';
+            if (this.diasParaBuscar <= 0) {
+                tempo = '5 minutos';
+                this.chartData.chart.drawAnchors = 0;
+            }
+            this.chartData.chart.caption = `Consumo dos últimos ${tempo}`;
         }
 
         if (this.loading != null && this.loading != undefined)

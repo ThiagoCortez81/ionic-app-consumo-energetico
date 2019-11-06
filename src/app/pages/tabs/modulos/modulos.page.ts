@@ -40,11 +40,12 @@ export class ModulosPage implements OnInit {
             // Listen to incoming messages
             this._fcm.listenToNotifications().pipe(
                 tap(msg => {
+                    this._localNotifications.cancelAll();
                     this._localNotifications.schedule({
                         id: 1,
                         title: msg.title,
                         text: msg.body
-                    })
+                    });
                 })
             ).subscribe();
         });

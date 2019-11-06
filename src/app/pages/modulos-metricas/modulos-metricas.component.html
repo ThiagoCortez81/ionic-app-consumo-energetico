@@ -17,6 +17,7 @@
         </ion-item>
 
         <ion-card-content text-center>
+            <ion-button [color]="diasParaBuscar == 0 ? 'light' : 'dark'" (click)="selecionaBuscaDados(0)" class="selected">Tempo Real</ion-button>
             <ion-button [color]="diasParaBuscar == 7 ? 'light' : 'dark'" (click)="selecionaBuscaDados(7)" class="selected">7 dias</ion-button>
             <ion-button [color]="diasParaBuscar == 30 ? 'light' : 'dark'" (click)="selecionaBuscaDados(30)" class="selected">30 dias</ion-button>
             <ion-button [color]="diasParaBuscar == 60 ? 'light' : 'dark'" (click)="selecionaBuscaDados(60)" class="selected">60 dias</ion-button>
