@@ -12,6 +12,7 @@
     "e2e": "ng e2e",
     "devapp": "ionic serve --devapp",
     "buildapk": "ionic cordova build android --release",
+    "buildbrowser": "ionic cordova build browser",
     "android": "ionic cordova run android"
   },
   "private": true,
