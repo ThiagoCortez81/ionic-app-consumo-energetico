@@ -3,11 +3,12 @@ import {AppComponent} from "../../../app.component";
 import {WebservicesService} from "../../../services/webservices/webservices.service";
 import {AlertService} from "../../../services/alert/alert.service";
 import {Router} from "@angular/router";
-import {tap} from "rxjs/operators";
+import {startWith, switchMap, tap} from "rxjs/operators";
 import {FcmService} from "../../../services/fcm/fcm.service";
 import {Platform, ToastController} from "@ionic/angular";
 import {LocalNotifications} from '@ionic-native/local-notifications/ngx';
 import {StorageService} from "../../../services/storage/storage.service";
+import {interval} from "rxjs";
 
 @Component({
     selector: 'tab-modulos',
@@ -64,6 +65,23 @@ export class ModulosPage implements OnInit {
 
             loading.dismiss();
         });
+
+        interval(10000)
+            .pipe(
+                startWith(0),
+                switchMap(() => this._ws.listarSensoresCliente().then(resp => resp.toPromise()))
+            ).subscribe((resposta: any) => {
+            if (resposta.isAuthenticated) {
+                this.listSensores = resposta.sensores;
+            } else {
+                this._storageService.saveJWT(undefined).then((res) => {
+                    this._alertService.defaultAlert("Oops!", null, "Sua sessão expirou, faça o login novamente!", ["Vamos lá!"]);
+                    this._nav.navigate(['/']);
+                });
+            }
+
+            loading.dismiss();
+        })
     }
 
     abrirAlertEditApelido(sensor) {
